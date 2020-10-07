@@ -47,15 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                // URLs matching for access rights
+
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-//                .antMatchers("/register").permitAll()
-                .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
-                .antMatchers("/admin/**").hasAnyAuthority("SUPER_USER","ADMIN_USER")
+                .antMatchers("/userPage/**").hasAnyAuthority("SITE_USER")
+                .antMatchers("/adminPage/**").hasAnyAuthority("ADMIN_USER")
+
                 .anyRequest().authenticated()
                 .and()
-                // form login
                 .csrf().disable().formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")

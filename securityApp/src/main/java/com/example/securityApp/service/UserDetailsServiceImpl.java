@@ -5,11 +5,17 @@ import com.example.securityApp.model.User;
 import com.example.securityApp.repository.RoleRepository;
 import com.example.securityApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements MyUserDetails {
@@ -29,10 +35,12 @@ public class UserDetailsServiceImpl implements MyUserDetails {
         userRepository.save(user);
     }
 
+
     @Override
     public boolean isUserAlreadyPresent(User user) {
-        // Try to implement this method, as assignment.
+
         return false;
     }
-
 }
+
+

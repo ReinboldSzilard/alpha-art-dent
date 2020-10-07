@@ -1,18 +1,29 @@
 package com.example.securityApp.controller;
 
+import com.example.securityApp.model.User;
 import com.example.securityApp.service.MyUserDetails;
+import com.example.securityApp.service.UserService;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class WebController {
 
-    @Autowired
-    MyUserDetails userService;
 
-    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+    @Autowired
+    MyUserDetails userInterface;
+
+    @Autowired
+    UserService userService;
+
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login"); // resources/template/login.html
@@ -29,33 +40,15 @@ public class WebController {
     }
 
     @RequestMapping(value = "/userPage", method = RequestMethod.GET)
-    public ModelAndView user() {
+    public ModelAndView userPage(Model model) {
+
+        List<User> loginName = userService.listAll();
+        model.addAttribute("loginName", loginName);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userPage");
         return (modelAndView);
 
     }
+
 }
-
-
-
-
-
-
-//
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public void loginPageRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
-//
-//        String role = authResult.getAuthorities().toString();
-//
-//        if (role.contains("ADMIN")) {
-//            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/index"));
-//        } else if (role.contains("USER")) {
-//            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/index"));
-//        }
-//    }
-////
-////}
-////
-////
