@@ -15,6 +15,7 @@ public class Product {
     @Column(name = "product_price")
     private float price;
 
+
     public Long getId() {
         return id;
     }
@@ -38,4 +39,5 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
+
 }

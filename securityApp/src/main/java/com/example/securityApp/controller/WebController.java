@@ -1,27 +1,32 @@
 package com.example.securityApp.controller;
 
+
+import com.example.securityApp.model.Product;
 import com.example.securityApp.model.User;
-import com.example.securityApp.service.MyUserDetails;
+import com.example.securityApp.service.ProductService;
 import com.example.securityApp.service.UserService;
-import org.assertj.core.util.Lists;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class WebController {
 
 
     @Autowired
-    MyUserDetails userInterface;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    ProductService productService;
+
+
+
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -43,7 +48,10 @@ public class WebController {
     public ModelAndView userPage(Model model) {
 
         List<User> loginName = userService.listAll();
+
         model.addAttribute("loginName", loginName);
+        model.addAttribute("products", productService.listAll());
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userPage");
